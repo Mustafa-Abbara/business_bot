@@ -9,94 +9,146 @@ from fpdf import FPDF
 
 OUT = Path(__file__).resolve().parent.parent / "me" / "about_business.pdf"
 
-# Each section: (heading, [paragraphs]); a paragraph starting with "- " is a bullet.
+TITLE = "EchoNest"
+TAGLINE = "Your memories, told your way."
+
+# Each section: (heading, [paragraphs]); a paragraph starting with "- " is a bullet,
+# one starting with "Q: " is shown in bold.
 SECTIONS = [
-    ("Mission", [
-        "Cedar Code Academy makes practical programming and STEM skills accessible to students aged "
-        "12 to 25 in Lebanon through small-group, project-based learning. We believe every student can "
-        "learn to build real software when classes are small, hands-on and patient.",
+    ("1. Company Overview", [
+        "EchoNest is a digital-memory studio. We transform a person's photos, voice recordings, written "
+        "memories, important dates and captions into a personalized digital memory experience. Instead of "
+        "leaving photos in a folder, we organize them into a story: a graduation journey, a family timeline, "
+        "a relationship story, a travel memory or a personal life archive.",
+        "EchoNest is an online studio. Our team is based in Beirut and works with clients anywhere.",
     ]),
-    ("Services and Prices", [
-        "- Python Foundations: an 8-week group course for complete beginners, two 90-minute sessions per "
-        "week. Price: $240 for the full course.",
-        "- University CS Tutoring: one-on-one help with university courses such as data structures, "
-        "algorithms and programming labs. Price: $25 per hour.",
-        "- Web Development Bootcamp: a 12-week course covering HTML, CSS, JavaScript and React. "
-        "Price: $450. Open to students aged 16 and above.",
-        "- Robotics & Arduino Club: a Saturday club for ages 12 to 16 where students build and program "
-        "small robots. Price: $60 per month.",
-        "- Corporate & School Workshops: custom trainings designed for companies and schools. These do not "
-        "have a fixed price; each workshop is quoted after a consultation with the client.",
+    ("2. Mission", [
+        "EchoNest helps people preserve meaningful moments by turning scattered digital memories into "
+        "organized, personal stories that can be revisited and shared.",
     ]),
-    ("Team", [
-        "- Rami Haddad, Co-founder and Director. A former full-stack software engineer with six years of "
-        "industry experience. Rami teaches the Web Development Bootcamp.",
-        "- Lina Khoury, Co-founder and Head of Curriculum. Lina holds an MSc in Computer Engineering and "
-        "designs all course material. She leads Python Foundations and University CS Tutoring.",
-        "- Omar Saade, Co-founder and Robotics Lead. An electrical engineer who previously worked in "
-        "industrial automation. Omar runs the Robotics & Arduino Club.",
+    ("3. How EchoNest Works", [
+        "- Step 1, Consultation: a free 20-minute online call to understand the story you want to tell.",
+        "- Step 2, Booking: you choose a service and pay a 50% deposit.",
+        "- Step 3, Upload: we send you a secure upload link for your photos, recordings and written memories.",
+        "- Step 4, Production: our designers build your story, captions and timeline.",
+        "- Step 5, Review: you review the draft and request changes (two revision rounds are included).",
+        "- Step 6, Delivery: you receive your private shareable page and pay the remaining balance.",
     ]),
-    ("Unique Value Proposition", [
-        "- Small groups: never more than 6 students per group.",
-        "- Project-based: every course ends with a real project that students can show in a portfolio.",
-        "- Bilingual teaching: classes are taught in English, with explanations in Arabic whenever needed.",
-        "- Free trial: the first session of any group course is free.",
-        "- Reliable classroom: the centre has generator backup power and a backup internet line, so "
-        "sessions are not interrupted by power cuts.",
+    ("4. Services", [
+        "Every project is delivered as a private shareable page with a chronological story, captions, "
+        "short narratives, key milestones and a visual timeline.",
+        "- Memory Capsule: a compact digital story built around one event. Includes up to 60 photos and "
+        "up to 3 voice recordings.",
+        "- Event Story: designed for weddings, graduations, anniversaries, reunions and similar events. "
+        "Includes up to 150 photos and personal messages from guests.",
+        "- Life Timeline: a larger project that combines memories from many years into one chronological story.",
+        "- Legacy Edition: our premium service for preserving someone's life story. The customer provides "
+        "photographs, documents and memories, and we include up to 3 recorded interview sessions, held online.",
+        "- Corporate Story: a company-history package for startups and organizations, covering founder "
+        "stories, milestones and employee anniversaries. Corporate Story projects are led by Maya Haddad.",
     ]),
-    ("Location and Hours", [
-        "Address: Makdessi Street, Hamra, Beirut, 3rd floor.",
-        "Opening hours: Monday to Friday, 2:00 PM to 9:00 PM. Saturday, 9:00 AM to 5:00 PM. Closed on Sundays.",
+    ("5. Pricing", [
+        "- Memory Capsule: $79",
+        "- Event Story: $149",
+        "- Life Timeline: $299",
+        "- Legacy Edition: $499",
+        "- Corporate Story: no fixed price. Each Corporate Story is quoted after a consultation with the client.",
+        "Payment: a 50% deposit is paid at booking and the remaining balance is paid on delivery.",
     ]),
-    ("Frequently Asked Questions", [
-        "Q: Do I need my own laptop?",
-        "A: No. We lend laptops to students during sessions at the centre. For online sessions you need "
-        "your own computer.",
-        "Q: Can I study online?",
-        "A: Yes. Python Foundations and University CS Tutoring are available online. The Web Development "
-        "Bootcamp and the Robotics & Arduino Club are in person only.",
-        "Q: Is there a free trial?",
-        "A: Yes. The first session of any group course is free.",
-        "Q: Can I pay in installments?",
-        "A: The Web Development Bootcamp can be paid in 3 monthly installments of $150. Other services are "
-        "paid in full at registration.",
-        "Q: What is your refund policy?",
-        "A: You get a full refund if you cancel before the second session of a course. After the second "
-        "session, fees are not refundable.",
-        "Q: Do you give certificates?",
-        "A: Yes. Students who complete Python Foundations or the Web Development Bootcamp receive a "
-        "certificate of completion.",
-        "Q: What ages do you accept?",
-        "A: The Robotics & Arduino Club is for ages 12 to 16. The Web Development Bootcamp is for ages 16 "
-        "and above. Python Foundations and University CS Tutoring are open to students aged 12 to 25.",
+    ("6. Target Customers", [
+        "- Families: family histories, anniversaries, birthdays and reunions.",
+        "- Individuals: graduations, relationships, travels and personal milestones.",
+        "- Organizations: employee anniversaries, founder stories and company milestones.",
     ]),
-    ("Contact Policy", [
-        "To book a course or request a workshop quote, leave your name and email with our assistant. "
-        "Our team replies within one business day. We never share your contact details with third parties.",
+    ("7. Team", [
+        "- Maya Haddad, Founder & Creative Director. Specializes in digital storytelling and archival design.",
+        "- Karim Saad, Memory Experience Designer. Creates the timelines, layouts and visual stories.",
+        "- Lina Farhat, Client Experience Manager. Handles customer communication and project coordination, "
+        "and is the first point of contact for every new client.",
+    ]),
+    ("8. Unique Value Proposition", [
+        "EchoNest does not simply store memories. It gives them a narrative. A cloud-storage service answers "
+        "\"Where are my photos?\" EchoNest answers \"What story do these photos tell?\"",
+    ]),
+    ("9. Supported Materials", [
+        "- Photos in JPG, PNG or HEIC format.",
+        "- Standard audio recordings in MP3, WAV or M4A format.",
+        "- Written memories, captions and important dates.",
+        "Materials are never collected through the chat. After booking, the team sends a secure upload link.",
+    ]),
+    ("10. Project Timeline", [
+        "Typical projects take 5 to 10 business days from the moment all materials are uploaded. "
+        "The Legacy Edition takes 3 to 4 weeks because it includes interviews.",
+    ]),
+    ("11. Revision Policy", [
+        "Every project includes two revision rounds. Revision requests are made on the draft page during review.",
+    ]),
+    ("12. Privacy Policy", [
+        "Customer-provided material is treated as private project material. It is used only to build the "
+        "customer's project and is never shared with third parties. Each shareable page is password-protected "
+        "and stays online for 5 years. Customers can ask us to delete their page and materials at any time.",
+    ]),
+    ("13. Refund Policy", [
+        "Customers may cancel before production begins and receive a full refund of their deposit. "
+        "Once production has started, the deposit is not refundable.",
+    ]),
+    ("14. Contact Information", [
+        "To start a project or request a Corporate Story quote, leave your name and email with our assistant. "
+        "Lina Farhat's team replies within one business day. Team hours: Monday to Friday, "
+        "9:00 AM to 6:00 PM (Beirut time).",
+    ]),
+    ("15. Frequently Asked Questions", [
+        "Q: What does EchoNest actually create?",
+        "A: A private shareable page that tells your story with photos, captions, short narratives, "
+        "milestones and a visual timeline.",
+        "Q: How long does a project take?",
+        "A: Typically 5 to 10 business days after all materials are uploaded. The Legacy Edition takes 3 to 4 weeks.",
+        "Q: Can I send my photos in the chat?",
+        "A: No. After booking, the team sends you a secure upload link.",
+        "Q: Who can see my memory page?",
+        "A: Only people you share it with. Every page is password-protected.",
+        "Q: How long does my page stay online?",
+        "A: 5 years. You can ask us to delete it earlier at any time.",
+        "Q: Do I pay everything upfront?",
+        "A: No. You pay a 50% deposit at booking and the rest on delivery.",
+        "Q: Who will work on my project?",
+        "A: Lina Farhat coordinates your project, Karim Saad designs it, and Maya Haddad oversees the "
+        "creative direction.",
+    ]),
+    ("16. Services We Do Not Currently Offer", [
+        "- Film restoration.",
+        "- Physical photo restoration.",
+        "- Professional videography.",
+        "- Forensic recovery of deleted files.",
+    ]),
+    ("17. Example Projects", [
+        "- A Memory Capsule for a 2026 university graduation, with photos from the ceremony and short "
+        "messages from friends.",
+        "- A Legacy Edition preserving a grandfather's life story, built from family photos, old letters "
+        "and three recorded interviews.",
     ]),
 ]
 
 
 def build():
     pdf = FPDF(format="A4")
-    pdf.set_title("About Cedar Code Academy")
-    pdf.set_author("Cedar Code Academy")
+    pdf.set_title(f"About {TITLE}")
+    pdf.set_author(TITLE)
     pdf.set_margins(20, 20, 20)
     pdf.set_auto_page_break(auto=True, margin=20)
     pdf.add_page()
 
-    pdf.set_font("Helvetica", "B", 22)
-    pdf.cell(0, 12, "Cedar Code Academy", new_x="LMARGIN", new_y="NEXT")
-    pdf.set_font("Helvetica", "I", 12)
-    pdf.cell(0, 8, "Coding and robotics tutoring in Beirut", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_font("Helvetica", "B", 24)
+    pdf.cell(0, 12, TITLE, new_x="LMARGIN", new_y="NEXT")
+    pdf.set_font("Helvetica", "I", 13)
+    pdf.cell(0, 8, TAGLINE, new_x="LMARGIN", new_y="NEXT")
     pdf.ln(4)
 
     for heading, paragraphs in SECTIONS:
         pdf.set_font("Helvetica", "B", 14)
         pdf.cell(0, 9, heading, new_x="LMARGIN", new_y="NEXT")
         for para in paragraphs:
-            bold = para.startswith("Q: ")
-            pdf.set_font("Helvetica", "B" if bold else "", 11)
+            pdf.set_font("Helvetica", "B" if para.startswith("Q: ") else "", 11)
             if para.startswith("- "):
                 pdf.set_x(pdf.l_margin + 4)
                 pdf.multi_cell(0, 6, "-  " + para[2:], new_x="LMARGIN", new_y="NEXT")

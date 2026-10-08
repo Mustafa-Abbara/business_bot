@@ -45,8 +45,7 @@ def test_shared_facts_match():
 def test_prices_agree():
     pdf_prices = set(re.findall(r"\$\d+", PDF))
     summary_prices = set(re.findall(r"\$\d+", SUMMARY))
-    # $150 is the PDF-only installment amount (3 x $150 = $450 bootcamp price)
-    assert pdf_prices - {"$150"} == summary_prices, f"PDF {pdf_prices} vs summary {summary_prices}"
+    assert pdf_prices == summary_prices, f"PDF {pdf_prices} vs summary {summary_prices}"
 
 
 def test_pdf_only_facts():
@@ -61,10 +60,20 @@ def test_summary_only_facts():
         assert item["phrase"] not in PDF, f"{item['phrase']!r} should be summary-only"
 
 
+def test_not_offered_services_are_listed():
+    """Declined services: the docs give a grounded 'no' (the agent still logs the demand)."""
+    for item in CHECKS["not_offered"]:
+        phrase = item["phrase"].lower()
+        assert phrase in PDF.lower(), f"{phrase!r} missing from the PDF not-offered list"
+        assert phrase in SUMMARY.lower(), f"{phrase!r} missing from the summary not-offered list"
+
+
 def test_unknown_questions_are_really_unknown():
+    """Hallucination traps: these topics must not appear anywhere in the docs."""
     for item in CHECKS["unknown"]:
-        kw = item["keyword"].lower()
-        assert kw not in PDF.lower() and kw not in SUMMARY.lower(), f"{kw!r} is answered by the docs"
+        pattern = r"\b" + re.escape(item["keyword"])
+        for name, text in [("PDF", PDF), ("summary", SUMMARY)]:
+            assert not re.search(pattern, text, re.I), f"{item['keyword']!r} is mentioned in the {name}"
 
 
 if __name__ == "__main__":

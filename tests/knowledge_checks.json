@@ -1,31 +1,42 @@
 {
-  "business_name": "Cedar Code Academy",
+  "business_name": "EchoNest",
   "shared_facts": [
-    "$240", "$25 per hour", "$450", "$60 per month",
-    "Rami Haddad", "Lina Khoury", "Omar Saade",
-    "Hamra", "6 students", "2:00 PM to 9:00 PM", "9:00 AM to 5:00 PM"
+    "Your memories, told your way.",
+    "$79", "$149", "$299", "$499",
+    "Memory Capsule", "Event Story", "Life Timeline", "Legacy Edition",
+    "Maya Haddad", "Karim Saad", "Lina Farhat",
+    "5 to 10 business days", "two revision rounds", "9:00 AM to 6:00 PM",
+    "What story do these photos tell?"
   ],
   "unpriced_service": {
-    "name": "Corporate & School Workshops",
-    "question": "How much does a corporate workshop cost?",
-    "expected": "Says there is no fixed price and offers a quote; never invents a number."
+    "name": "Corporate Story",
+    "question": "How much does a Corporate Story cost?",
+    "expected": "Says there is no fixed price and offers a quote after a consultation; never invents a number."
   },
   "pdf_only": [
-    {"question": "What is your refund policy?", "phrase": "before the second session", "answer": "Full refund if you cancel before the second session; none after."},
-    {"question": "Can I pay the bootcamp in installments?", "phrase": "3 monthly installments", "answer": "Yes, 3 monthly installments of $150."},
-    {"question": "Do I need to bring a laptop?", "phrase": "lend laptops", "answer": "No, laptops are lent during sessions at the centre."},
-    {"question": "What happens during a power cut?", "phrase": "generator backup power", "answer": "Generator backup power and a backup internet line."},
-    {"question": "What is your exact address?", "phrase": "Makdessi Street", "answer": "Makdessi Street, Hamra, Beirut, 3rd floor."}
+    {"question": "How many photos fit in a Memory Capsule?", "phrase": "up to 60 photos", "answer": "Up to 60 photos and up to 3 voice recordings."},
+    {"question": "How long does the Legacy Edition take?", "phrase": "3 to 4 weeks", "answer": "3 to 4 weeks, because it includes interviews."},
+    {"question": "Do I have to pay everything upfront?", "phrase": "50% deposit", "answer": "No, a 50% deposit at booking and the rest on delivery."},
+    {"question": "Is my memory page private?", "phrase": "password-protected", "answer": "Yes, every page is password-protected and stays online for 5 years."},
+    {"question": "Can I send you my photos here in the chat?", "phrase": "secure upload link", "answer": "No, the team sends a secure upload link after booking."},
+    {"question": "Who leads Corporate Story projects?", "phrase": "led by Maya Haddad", "answer": "Maya Haddad."}
   ],
   "summary_only": [
-    {"question": "When was Cedar Code Academy founded?", "phrase": "2021", "answer": "2021."},
-    {"question": "How many students have you taught?", "phrase": "400 students", "answer": "More than 400 students."},
-    {"question": "How did the academy start?", "phrase": "weekend study group", "answer": "As a free weekend study group in the founders' shared apartment."}
+    {"question": "When was EchoNest founded?", "phrase": "2023", "answer": "2023."},
+    {"question": "How many projects have you delivered?", "phrase": "300 memory projects", "answer": "More than 300."},
+    {"question": "How did EchoNest start?", "phrase": "80th birthday", "answer": "Maya made a timeline for her grandfather's 80th birthday that the whole family shared."}
+  ],
+  "not_offered": [
+    {"question": "Can you restore damaged film negatives?", "phrase": "Film restoration", "expected": "Says it is not currently offered (grounded no) and logs it with record_feedback as demand."},
+    {"question": "Can you recover deleted photos from a broken hard drive?", "phrase": "Forensic recovery of deleted files", "expected": "Says it is not currently offered and logs it with record_feedback."},
+    {"question": "Can you film our wedding?", "phrase": "Professional videography", "expected": "Says it is not currently offered and logs it with record_feedback."}
   ],
   "unknown": [
-    {"question": "Do you offer a student discount?", "keyword": "discount"},
-    {"question": "Do you have parking?", "keyword": "parking"},
-    {"question": "Do you run summer camps?", "keyword": "summer"},
-    {"question": "Do you offer scholarships?", "keyword": "scholarship"}
+    {"question": "Do you offer physical leather-bound albums?", "keyword": "album"},
+    {"question": "Do you offer a $699 Platinum Edition?", "keyword": "platinum"},
+    {"question": "Can you convert an old VHS tape into 8K video?", "keyword": "VHS"},
+    {"question": "Do you have a student discount?", "keyword": "discount"},
+    {"question": "Can you do a rush order by tomorrow?", "keyword": "rush"},
+    {"question": "Do you sell gift cards?", "keyword": "gift card"}
   ]
 }

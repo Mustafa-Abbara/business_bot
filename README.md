@@ -6,7 +6,7 @@ A chatbot that represents a fictional business: it answers questions from the bu
 message (general / lead / feedback), collects leads, and logs unanswered questions and feedback through tool calls.
 It runs on Gemini through the `openai` SDK (OpenAI-compatible endpoint) and is served with a Gradio ChatInterface.
 
-> 🚧 Work in progress — Stages 0–5 (environment, repo skeleton, business identity, context loading, first LLM call, persona + instructions + system prompt, tools + MCP-style schemas) are complete.
+> 🚧 Work in progress — Stages 0–6 (environment, repo skeleton, business identity, context loading, first LLM call, persona + instructions + system prompt, tools + MCP-style schemas, tool-call loop) are complete.
 
 ## The business: EchoNest — *"Your memories, told your way."*
 

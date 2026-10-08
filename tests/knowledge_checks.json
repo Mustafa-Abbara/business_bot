@@ -1,0 +1,31 @@
+{
+  "business_name": "Cedar Code Academy",
+  "shared_facts": [
+    "$240", "$25 per hour", "$450", "$60 per month",
+    "Rami Haddad", "Lina Khoury", "Omar Saade",
+    "Hamra", "6 students", "2:00 PM to 9:00 PM", "9:00 AM to 5:00 PM"
+  ],
+  "unpriced_service": {
+    "name": "Corporate & School Workshops",
+    "question": "How much does a corporate workshop cost?",
+    "expected": "Says there is no fixed price and offers a quote; never invents a number."
+  },
+  "pdf_only": [
+    {"question": "What is your refund policy?", "phrase": "before the second session", "answer": "Full refund if you cancel before the second session; none after."},
+    {"question": "Can I pay the bootcamp in installments?", "phrase": "3 monthly installments", "answer": "Yes, 3 monthly installments of $150."},
+    {"question": "Do I need to bring a laptop?", "phrase": "lend laptops", "answer": "No, laptops are lent during sessions at the centre."},
+    {"question": "What happens during a power cut?", "phrase": "generator backup power", "answer": "Generator backup power and a backup internet line."},
+    {"question": "What is your exact address?", "phrase": "Makdessi Street", "answer": "Makdessi Street, Hamra, Beirut, 3rd floor."}
+  ],
+  "summary_only": [
+    {"question": "When was Cedar Code Academy founded?", "phrase": "2021", "answer": "2021."},
+    {"question": "How many students have you taught?", "phrase": "400 students", "answer": "More than 400 students."},
+    {"question": "How did the academy start?", "phrase": "weekend study group", "answer": "As a free weekend study group in the founders' shared apartment."}
+  ],
+  "unknown": [
+    {"question": "Do you offer a student discount?", "keyword": "discount"},
+    {"question": "Do you have parking?", "keyword": "parking"},
+    {"question": "Do you run summer camps?", "keyword": "summer"},
+    {"question": "Do you offer scholarships?", "keyword": "scholarship"}
+  ]
+}

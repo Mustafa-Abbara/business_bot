@@ -1,0 +1,16 @@
+# Secrets — never commit
+.env
+
+# Python / environments
+.venv/
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Runtime logs (keep the folder via logs/.gitkeep)
+logs/*.jsonl
+
+# Gradio
+.gradio/

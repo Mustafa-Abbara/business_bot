@@ -19,7 +19,7 @@ def test_app_py_compiles_and_has_no_tests():
     compile(source, "app.py", "exec")
     for leftover in ["PROMPT_TESTS", "AGENT_TESTS", "REFLECTION_TESTS", "ROUTER_CASES", "temporary_logs", "tests/"]:
         assert leftover not in source, f"test code leaked into app.py: {leftover}"
-    assert source.rstrip().endswith("demo.launch(theme=gr.themes.Soft())")
+    assert source.rstrip().endswith("demo.launch(theme=gr.themes.Soft(), ssr_mode=False)")
 
 
 def test_key_only_from_environment():

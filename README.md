@@ -18,10 +18,29 @@ current `openai` SDK.
 ## Contents
 [The business](#the-business-echonest) · [Architecture](#architecture) · [Setup](#setup) · [How to run](#how-to-run) ·
 [Persona and instructions](#persona-and-instructions) · [Tools (MCP-style schemas)](#tools-mcp-style-schemas) ·
-[Router](#router) · [Reflection (bonus)](#reflection-bonus) · [Testing](#testing) ·
+[Assignment checklist](#assignment-checklist) · [Router](#router) · [Reflection (bonus)](#reflection-bonus) · [Testing](#testing) ·
 [What testing taught us](#what-testing-taught-us) · [Deployment](#deployment-hugging-face-spaces) ·
 [Library notes](#library-notes) · [Key safety](#key-safety) ·
 [Limitations](#limitations)
+
+## Assignment checklist
+
+| Assignment item | Where it is | Evidence |
+|---|---|---|
+| `business_summary.txt` | [`me/business_summary.txt`](me/business_summary.txt) | `tests/test_business_files.py` (agrees with the PDF) |
+| `about_business.pdf` | [`me/about_business.pdf`](me/about_business.pdf) (selectable text) | notebook 2.1; `tests/test_business_files.py` |
+| `business_agent.ipynb` | [`business_agent.ipynb`](business_agent.ipynb), sections 1–12 | section 11 summary; fresh clone + fresh venv run (Stage 11) |
+| Clearly labelled persona and instructions | notebook **3. 🎭 PERSONA** and **4. 📏 INSTRUCTIONS** | [Persona and instructions](#persona-and-instructions); prompt tests P1–P8 |
+| Router to the right handling path | notebook **7. Router**; `🔀 ROUTE` logs | 97% on 39 cases ([E11](docs/evidence/E11_router_evaluation.txt)); [Router](#router) |
+| Two working tools | notebook **6** + **8**; `logs/leads.jsonl`, `logs/feedback.jsonl` | T1–T8, `tests/test_tools.py`; E4–E6 ([logs](docs/evidence/run1_console_log.txt)) |
+| Tool schemas documented MCP-style | notebook **6.1** | [Tools (MCP-style schemas)](#tools-mcp-style-schemas) |
+| Chat history (short-term memory) and tool handling | notebook **8** (tool-call loop) and **9** (`respond()`) | M1–M4; E5, E7 ([screenshot 06](docs/screenshots/06_E7_memory_after_reflection_fix.jpg)) |
+| API key in `.env`, not uploaded | `.gitignore`, `.env.example` | [Key safety](#key-safety); history scan finds no key |
+| Runs successfully | notebook Restart & Run All; `python app.py`; the Space | [End-to-end results](#end-to-end-results-stage-12) E1–E12 |
+| Gradio ChatInterface demo | notebook **12**; [`app.py`](app.py) | [screenshots](docs/screenshots); demo video |
+| GitHub repo with video | this repo | 🎬 *video link: TODO* |
+| (Bonus) Reflection with logged draft and revised reply | notebook **10**; `logs/reflection.jsonl` | R1–R6; [run1_reflection.jsonl](docs/evidence/run1_reflection.jsonl) |
+| (Bonus) Hugging Face Spaces | [the Space](https://huggingface.co/spaces/Mustafa-Abbara/business_bot) | [container log](docs/evidence/space_container_log.txt); [screenshot 08](docs/screenshots/08_live_space_declined_service.jpg) |
 
 ## The business: EchoNest
 

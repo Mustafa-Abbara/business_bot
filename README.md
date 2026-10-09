@@ -401,8 +401,8 @@ Each fix changed wording or added a check. The architecture never changed.
 
 ## Deployment (Hugging Face Spaces)
 
-**`app.py` is generated from the notebook**, so there is only one copy of the logic. `scripts/export_app.py` copies
-the 16 definition cells (setup → persona → instructions → tools → router → agent → orchestrator → reflection →
+**`app.py` is generated from the notebook**, so there is only one copy of the logic. `scripts/export_app.py` adds a
+ZeroGPU placeholder (explained below), then copies the 16 definition cells (setup → persona → instructions → tools → router → agent → orchestrator → reflection →
 Gradio) and leaves out every test cell. `tests/test_app_export.py` fails if `app.py` is out of date, and checks that
 no key-like string is in it.
 
@@ -416,8 +416,9 @@ python scripts/prepare_space.py  # copies exactly the 5 Space files into dist/hf
 YAML header sets `sdk: gradio`, `sdk_version: 6.29.1` (the tested version) and `python_version: "3.12"`.
 
 **Create the Space** (in your Hugging Face account):
-1. huggingface.co → **New Space** → choose a name, **SDK: Gradio**, template **Blank**, hardware **CPU basic
-   (free)**: **not ZeroGPU**, which stops apps that have no `@spaces.GPU` function, visibility **Public** (so the grader can open it).
+1. huggingface.co → **New Space** → choose a name, **SDK: Gradio**, template **Blank**, visibility **Public** (so
+   the grader can open it). On a free account, Gradio Spaces run on **ZeroGPU** hardware; `app.py` handles that
+   (see below).
 2. **Files → Add file → Upload files**: upload everything inside `dist/hf_space/`, keeping the `me/` folder (or
    clone the Space with git and push the files). This replaces the default README. **Never upload `.env`.**
 3. **Settings → Variables and secrets → New secret**: name `GEMINI_API_KEY`, value = your key. Use a **secret**,
@@ -432,12 +433,15 @@ documents loaded, and a 3-message chat routed `lead` → `general` → `feedback
 ([screenshot 07](docs/screenshots/07_space_folder_local_run.jpg)). In that run, reflection received output it
 couldn't parse once, so the draft was kept as designed. Raw model output is now logged when that happens.
 
-**Found on the real Space: wrong hardware.** The first deployment started correctly (`Running on local URL`)
-and was then stopped with a runtime error and no Python traceback. The Space page showed the reason: *"No
-@spaces.GPU function detected during startup"*. The Space had been created on **ZeroGPU** hardware, which requires
-a GPU-decorated function. Milo needs no GPU (the LLM runs on Google's servers), so the fix was a setting:
-**Settings → Space hardware → CPU basic (free)**. I first suspected Gradio's server-side rendering (SSR) and set
-`ssr_mode=False`. That wasn't the cause, but it was kept because client-side rendering is what was tested locally.
+**Found on the real Space: ZeroGPU.** The first deployment started correctly (`Running on local URL`) and was then
+stopped with a runtime error and no Python traceback. The Space page gave the reason: *"No @spaces.GPU function
+detected during startup"*. On a free account, Gradio Spaces run on **ZeroGPU** hardware, and switching to CPU needs
+a paid plan. ZeroGPU only starts apps that define at least one `@spaces.GPU` function. Milo needs no GPU (the LLM
+runs on Google's servers), so `scripts/export_app.py` adds a clearly labelled **placeholder** at the top of `app.py`:
+a `@spaces.GPU` function that is **never called**, so it uses no GPU time. Locally, without the `spaces` package, it
+does nothing. `tests/test_app_export.py` checks that it comes first and is never called. I first suspected Gradio's
+server-side rendering (SSR) and set `ssr_mode=False`. That wasn't the cause, but it was kept because client-side
+rendering is what was tested locally.
 
 **Space caveats:** files the app writes (`logs/*.jsonl`) are lost when the Space restarts or sleeps. A public Space
 shares one free-tier key with everyone, so heavy use can exhaust the daily quota; Milo then replies with the polite

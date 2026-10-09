@@ -22,6 +22,14 @@ def test_app_py_compiles_and_has_no_tests():
     assert source.rstrip().endswith("demo.launch(theme=gr.themes.Soft(), ssr_mode=False)")
 
 
+def test_zerogpu_placeholder_is_first_and_optional():
+    source = (ROOT / "app.py").read_text(encoding="utf-8")
+    shim = source.index("import spaces")
+    assert shim < source.index("import openai") and shim < source.index("import gradio"), "spaces must be imported first"
+    assert "@spaces.GPU" in source and "except ImportError:" in source[shim:shim + 400]
+    assert "zerogpu_placeholder(" not in source.replace("def zerogpu_placeholder(", ""), "the placeholder must never be called"
+
+
 def test_key_only_from_environment():
     source = (ROOT / "app.py").read_text(encoding="utf-8")
     assert 'os.getenv("GEMINI_API_KEY")' in source

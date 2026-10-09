@@ -39,11 +39,32 @@ Tests and demos live in the notebook; this file contains only the application co
 """
 '''
 
+# Added only to app.py (not the notebook): free Gradio Spaces run on ZeroGPU hardware, which stops any app that does
+# not define at least one @spaces.GPU function ("No @spaces.GPU function detected during startup").
+ZEROGPU_SHIM = '''
+# ====================================================================================================
+# Hugging Face ZeroGPU compatibility (deployment only)
+# ====================================================================================================
+# Free Gradio Spaces run on ZeroGPU hardware, which refuses to start an app that defines no @spaces.GPU function.
+# Milo needs no GPU (the LLM runs on Google's servers), so this placeholder exists only to pass that startup check.
+# It is never called, so it uses no GPU time. `spaces` must be imported before anything else, as Hugging Face
+# recommends. Locally, where the `spaces` package isn't installed, this block does nothing.
+try:
+    import spaces
+
+    @spaces.GPU
+    def zerogpu_placeholder():
+        """Never called: present only so a ZeroGPU Space accepts this CPU-only app."""
+        return None
+except ImportError:
+    spaces = None
+'''
+
 
 def build_app_source():
     nb = json.loads((ROOT / "business_agent.ipynb").read_text(encoding="utf-8"))
     code = ["".join(c["source"]) for c in nb["cells"] if c["cell_type"] == "code"]
-    parts = [HEADER]
+    parts = [HEADER, ZEROGPU_SHIM]
     for label, marker, cut in CELLS:
         matches = [src for src in code if marker in src]
         assert len(matches) == 1, f"expected one notebook cell containing {marker!r}, found {len(matches)}"

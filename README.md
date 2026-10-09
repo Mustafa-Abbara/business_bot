@@ -417,7 +417,7 @@ YAML header sets `sdk: gradio`, `sdk_version: 6.29.1` (the tested version) and `
 
 **Create the Space** (in your Hugging Face account):
 1. huggingface.co → **New Space** → choose a name, **SDK: Gradio**, template **Blank**, hardware **CPU basic
-   (free)**, visibility **Public** (so the grader can open it).
+   (free)**: **not ZeroGPU**, which stops apps that have no `@spaces.GPU` function, visibility **Public** (so the grader can open it).
 2. **Files → Add file → Upload files**: upload everything inside `dist/hf_space/`, keeping the `me/` folder (or
    clone the Space with git and push the files). This replaces the default README. **Never upload `.env`.**
 3. **Settings → Variables and secrets → New secret**: name `GEMINI_API_KEY`, value = your key. Use a **secret**,
@@ -432,11 +432,12 @@ documents loaded, and a 3-message chat routed `lead` → `general` → `feedback
 ([screenshot 07](docs/screenshots/07_space_folder_local_run.jpg)). In that run, reflection received output it
 couldn't parse once, so the draft was kept as designed. Raw model output is now logged when that happens.
 
-**Found on the real Space: SSR.** On Hugging Face, Gradio 6 turns on server-side rendering automatically (a Node.js
-proxy on port 7860 in front of Python on 7861). The first deployment started correctly, printing `Running on local
-URL … with SSR`, then was stopped from outside with `Stopping Node.js server...` and marked as a runtime error, with no
-Python traceback. Locally SSR is off, which is why every local test passed. Fix: `demo.launch(..., ssr_mode=False)`.
-After that, the Space started with plain `Running on local URL: http://0.0.0.0:7860` and stayed up.
+**Found on the real Space: wrong hardware.** The first deployment started correctly (`Running on local URL`)
+and was then stopped with a runtime error and no Python traceback. The Space page showed the reason: *"No
+@spaces.GPU function detected during startup"*. The Space had been created on **ZeroGPU** hardware, which requires
+a GPU-decorated function. Milo needs no GPU (the LLM runs on Google's servers), so the fix was a setting:
+**Settings → Space hardware → CPU basic (free)**. I first suspected Gradio's server-side rendering (SSR) and set
+`ssr_mode=False`. That wasn't the cause, but it was kept because client-side rendering is what was tested locally.
 
 **Space caveats:** files the app writes (`logs/*.jsonl`) are lost when the Space restarts or sleeps. A public Space
 shares one free-tier key with everyone, so heavy use can exhaust the daily quota; Milo then replies with the polite

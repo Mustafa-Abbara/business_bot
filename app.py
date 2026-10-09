@@ -694,6 +694,6 @@ demo = gr.ChatInterface(
     cache_examples=False,
     chatbot=gr.Chatbot(height=460, placeholder="**Hi, I'm Milo!** Whose story would you like to tell?"),
 )
-# ssr_mode=False: Hugging Face turns on server-side rendering by default (a Node.js proxy in front of Python);
-# with it on, the Space started and was then stopped. Client-side rendering is what we tested locally.
+# ssr_mode=False: client-side rendering everywhere, the mode tested locally (Hugging Face would otherwise
+# switch on server-side rendering through a Node.js proxy).
 demo.launch(theme=gr.themes.Soft(), ssr_mode=False)

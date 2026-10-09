@@ -1,5 +1,7 @@
 # EchoNest Business Agent: Milo, the Memory Concierge
 
+[![Open in Hugging Face Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-md.svg)](https://huggingface.co/spaces/Mustafa-Abbara/business_bot)
+
 EECE 503P/798S (Agentic Systems), Assignment C3: an agent-powered business assistant.
 
 Milo represents **EchoNest**, a fictional digital-memory studio. He answers questions from the business documents,
@@ -10,7 +12,7 @@ current `openai` SDK.
 | | |
 |---|---|
 | 🎬 Demo video | *TODO: add the link (Stage 14)* |
-| 🤗 Hugging Face Space | *TODO: add the link once the Space is created (see [Deployment](#deployment-hugging-face-spaces))* |
+| 🤗 Hugging Face Space | **[huggingface.co/spaces/Mustafa-Abbara/business_bot](https://huggingface.co/spaces/Mustafa-Abbara/business_bot)** (direct app: [mustafa-abbara-business-bot.hf.space](https://mustafa-abbara-business-bot.hf.space)) |
 | 📓 Main notebook | [`business_agent.ipynb`](business_agent.ipynb) |
 
 ## Contents
@@ -442,6 +444,10 @@ a `@spaces.GPU` function that is **never called**, so it uses no GPU time. Local
 does nothing. `tests/test_app_export.py` checks that it comes first and is never called. I first suspected Gradio's
 server-side rendering (SSR) and set `ssr_mode=False`. That wasn't the cause, but it was kept because client-side
 rendering is what was tested locally.
+
+**Live check (from a logged-out browser, as a grader sees it):** the Space shows **Running on ZERO**, and the
+example *"Can you restore damaged film negatives?"* got *"We don't currently offer film restoration services…"*
+([screenshot 08](docs/screenshots/08_live_space_declined_service.jpg)).
 
 **Space caveats:** files the app writes (`logs/*.jsonl`) are lost when the Space restarts or sleeps. A public Space
 shares one free-tier key with everyone, so heavy use can exhaust the daily quota; Milo then replies with the polite

@@ -10,14 +10,15 @@ current `openai` SDK.
 | | |
 |---|---|
 | 🎬 Demo video | *TODO: add the link (Stage 14)* |
-| 🤗 Hugging Face Space | *TODO: add the link (Stage 13, bonus)* |
+| 🤗 Hugging Face Space | *TODO: add the link once the Space is created (see [Deployment](#deployment-hugging-face-spaces))* |
 | 📓 Main notebook | [`business_agent.ipynb`](business_agent.ipynb) |
 
 ## Contents
 [The business](#the-business-echonest) · [Architecture](#architecture) · [Setup](#setup) · [How to run](#how-to-run) ·
 [Persona and instructions](#persona-and-instructions) · [Tools (MCP-style schemas)](#tools-mcp-style-schemas) ·
 [Router](#router) · [Reflection (bonus)](#reflection-bonus) · [Testing](#testing) ·
-[What testing taught us](#what-testing-taught-us) · [Library notes](#library-notes) · [Key safety](#key-safety) ·
+[What testing taught us](#what-testing-taught-us) · [Deployment](#deployment-hugging-face-spaces) ·
+[Library notes](#library-notes) · [Key safety](#key-safety) ·
 [Limitations](#limitations)
 
 ## The business: EchoNest
@@ -398,6 +399,43 @@ Each fix changed wording or added a check. The architecture never changed.
    paces requests under the per-minute limit, and doesn't retry when the *daily* quota is gone (it reports the reset
    time instead).
 
+## Deployment (Hugging Face Spaces)
+
+**`app.py` is generated from the notebook**, so there is only one copy of the logic. `scripts/export_app.py` copies
+the 16 definition cells (setup → persona → instructions → tools → router → agent → orchestrator → reflection →
+Gradio) and leaves out every test cell. `tests/test_app_export.py` fails if `app.py` is out of date, and checks that
+no key-like string is in it.
+
+```bash
+python scripts/export_app.py     # after changing the notebook
+python scripts/prepare_space.py  # copies exactly the 5 Space files into dist/hf_space/ (git-ignored)
+```
+
+`dist/hf_space/` contains `app.py`, `requirements.txt`, `me/about_business.pdf`, `me/business_summary.txt`, and
+`README.md`. That README is the **Space card** from [`deploy/hf_space/README.md`](deploy/hf_space/README.md), whose
+YAML header sets `sdk: gradio`, `sdk_version: 6.29.1` (the tested version) and `python_version: "3.12"`.
+
+**Create the Space** (in your Hugging Face account):
+1. huggingface.co → **New Space** → choose a name, **SDK: Gradio**, template **Blank**, hardware **CPU basic
+   (free)**, visibility **Public** (so the grader can open it).
+2. **Files → Add file → Upload files**: upload everything inside `dist/hf_space/`, keeping the `me/` folder (or
+   clone the Space with git and push the files). This replaces the default README. **Never upload `.env`.**
+3. **Settings → Variables and secrets → New secret**: name `GEMINI_API_KEY`, value = your key. Use a **secret**,
+   not a variable: variables are public.
+4. Open the **Logs** tab: the build installs `requirements.txt`, then shows `Running on local URL`. Every chat
+   prints the same `🔀 ROUTE` / `📥 LEAD LOGGED` / `📝 FEEDBACK LOGGED` / `🪞` lines there.
+
+**Tested locally the way the Space runs:** the five files in a folder outside the repo, with **no `.env`** anywhere,
+and the key passed only as an environment variable (which is what a Space secret becomes). The app started, both
+documents loaded, and a 3-message chat routed `lead` → `general` → `feedback`. It fired `record_customer_interest`
+("Sami <sami@example.com> | Life Timeline for my grandmother") and `record_feedback` twice
+([screenshot 07](docs/screenshots/07_space_folder_local_run.jpg)). In that run, reflection received output it
+couldn't parse once, so the draft was kept as designed. Raw model output is now logged when that happens.
+
+**Space caveats:** files the app writes (`logs/*.jsonl`) are lost when the Space restarts or sleeps. A public Space
+shares one free-tier key with everyone, so heavy use can exhaust the daily quota; Milo then replies with the polite
+"message limit" message.
+
 ## Library notes
 
 - The assignment mentions `google.generativeai` and `openai.ChatCompletion`. **`google.generativeai` has been deprecated
@@ -433,10 +471,14 @@ Each fix changed wording or added a check. The architecture never changed.
 ```
 business_bot/
   business_agent.ipynb        main notebook (sections 1–12)
+  app.py                      Hugging Face entry point, GENERATED from the notebook (scripts/export_app.py)
   me/about_business.pdf       business profile (selectable text)
   me/business_summary.txt     business summary
   tests/                      offline tests, knowledge checks, labelled router cases, notebook loader
   scripts/build_business_pdf.py   regenerates the PDF (fpdf2)
+  scripts/export_app.py       notebook → app.py
+  scripts/prepare_space.py    builds dist/hf_space/ (the 5 files to upload)
+  deploy/hf_space/README.md   Space card (sdk: gradio, sdk_version 6.29.1)
   docs/screenshots/           Stage 12 UI screenshots (E1–E9)
   docs/evidence/              Stage 12 console logs, JSONL logs, router and offline-test output
   logs/.gitkeep               runtime JSONL logs land here (git-ignored)

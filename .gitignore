@@ -14,3 +14,6 @@ logs/*.jsonl
 
 # Gradio
 .gradio/
+
+# Local editor/agent settings
+.claude/

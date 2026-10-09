@@ -447,7 +447,9 @@ rendering is what was tested locally.
 
 **Live check (from a logged-out browser, as a grader sees it):** the Space shows **Running on ZERO**, and the
 example *"Can you restore damaged film negatives?"* got *"We don't currently offer film restoration services…"*
-([screenshot 08](docs/screenshots/08_live_space_declined_service.jpg)).
+([screenshot 08](docs/screenshots/08_live_space_declined_service.jpg)). The Space's container log shows the full
+pipeline running on Hugging Face: `🔀 ROUTE: feedback` → `record_feedback` → `📝 FEEDBACK LOGGED` → `🪞 OK: draft kept`
+([space_container_log.txt](docs/evidence/space_container_log.txt)).
 
 **Space caveats:** files the app writes (`logs/*.jsonl`) are lost when the Space restarts or sleeps. A public Space
 shares one free-tier key with everyone, so heavy use can exhaust the daily quota; Milo then replies with the polite

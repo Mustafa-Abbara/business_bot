@@ -432,6 +432,12 @@ documents loaded, and a 3-message chat routed `lead` → `general` → `feedback
 ([screenshot 07](docs/screenshots/07_space_folder_local_run.jpg)). In that run, reflection received output it
 couldn't parse once, so the draft was kept as designed. Raw model output is now logged when that happens.
 
+**Found on the real Space: SSR.** On Hugging Face, Gradio 6 turns on server-side rendering automatically (a Node.js
+proxy on port 7860 in front of Python on 7861). The first deployment started correctly, printing `Running on local
+URL … with SSR`, then was stopped from outside with `Stopping Node.js server...` and marked as a runtime error, with no
+Python traceback. Locally SSR is off, which is why every local test passed. Fix: `demo.launch(..., ssr_mode=False)`.
+After that, the Space started with plain `Running on local URL: http://0.0.0.0:7860` and stayed up.
+
 **Space caveats:** files the app writes (`logs/*.jsonl`) are lost when the Space restarts or sleeps. A public Space
 shares one free-tier key with everyone, so heavy use can exhaust the daily quota; Milo then replies with the polite
 "message limit" message.

@@ -369,7 +369,7 @@ Results of the last full **Restart & Run All** on `gemini-3.5-flash-lite` (secti
 | Router (7.2) | 39 labelled cases + forced fallback | 97% (held-out 88%), 0 lead→feedback |
 | Tool triggers (8.2) | T1–T8: unknown question, lead, known fact (no tool), lead without email, complaint, declined service, "Platinum" trap, invalid email | 8/8 |
 | Memory (9.2) | M1 name recall, M2 lead across turns, M3 history converter, M4 recall after 12 messages | 4/4 |
-| Reflection (10.2) | R1–R5 (R6 added in Stage 12, verified separately: see below) | 6/6 |
+| Reflection (10.2) | R1–R6 (R6: a correct fact from 8 messages earlier must be kept) | 7/7 |
 | UI (12.1 + browser) | friendly errors; general, lead over 3 turns, complaint, declined service and Clear tested in a browser | ✅ |
 
 LLM tests are probabilistic. Repeated checks (P3 ×3, R3 ×2, language ×3) are noted where they matter.

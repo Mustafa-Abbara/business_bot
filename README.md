@@ -11,7 +11,7 @@ current `openai` SDK.
 
 | | |
 |---|---|
-| 🎬 Demo video | *TODO: add the link (Stage 14)* |
+| 🎬 Demo video | **[youtu.be/DLmIUHcXvzA](https://youtu.be/DLmIUHcXvzA)** |
 | 🤗 Hugging Face Space | **[huggingface.co/spaces/Mustafa-Abbara/business_bot](https://huggingface.co/spaces/Mustafa-Abbara/business_bot)** (direct app: [mustafa-abbara-business-bot.hf.space](https://mustafa-abbara-business-bot.hf.space)) |
 | 📓 Main notebook | [`business_agent.ipynb`](business_agent.ipynb) |
 
@@ -38,7 +38,7 @@ current `openai` SDK.
 | API key in `.env`, not uploaded | `.gitignore`, `.env.example` | [Key safety](#key-safety); history scan finds no key |
 | Runs successfully | notebook Restart & Run All; `python app.py`; the Space | [End-to-end results](#end-to-end-results-stage-12) E1–E12 |
 | Gradio ChatInterface demo | notebook **12**; [`app.py`](app.py) | [screenshots](docs/screenshots); demo video |
-| GitHub repo with video | this repo | 🎬 *video link: TODO* |
+| GitHub repo with video | this repo | 🎬 [demo video](https://youtu.be/DLmIUHcXvzA) |
 | (Bonus) Reflection with logged draft and revised reply | notebook **10**; `logs/reflection.jsonl` | R1–R6; [run1_reflection.jsonl](docs/evidence/run1_reflection.jsonl) |
 | (Bonus) Hugging Face Spaces | [the Space](https://huggingface.co/spaces/Mustafa-Abbara/business_bot) | [container log](docs/evidence/space_container_log.txt); [screenshot 08](docs/screenshots/08_live_space_declined_service.jpg) |
 
